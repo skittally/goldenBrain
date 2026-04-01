@@ -8,9 +8,9 @@ args = parser.parse_args()
 
 def sysCall(memory, position): # WIP
     printBuffer = ""
-    sysMemoryCall = memory[1] # choose the system call that is requested. 1 = print
-    printInput = memory[2] # write the value to the buffer
-    printOut = memory[3] # output the values in the cli
+    sysMemoryCall = memory[position] # choose the system call that is requested. 1 = print
+    printInput = memory[position + 1] # write the value to the buffer
+    printOut = memory[position + 2] # output the values in the cli
 
     if sysMemoryCall == 1:
         
