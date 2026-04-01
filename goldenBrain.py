@@ -6,18 +6,17 @@ parser.add_argument("--input", help="input compiled brainfuck code")
 parser.add_argument("--debugging", help="used for program debugging. WARNING: this will fuck speed", action="store_true")
 args = parser.parse_args()
 
-def sysCall(memory, position): # WIP
-    printBuffer = ""
-    sysMemoryCall = memory[position] # choose the system call that is requested. 1 = print
-    printInput = memory[position + 1] # write the value to the buffer
-    printOut = memory[position + 2] # output the values in the cli
+def sysCall(memory, position, printBuffer):
+    sysMemoryCall = memory[position]
+    printInput = memory[position + 1]
+    printOut = memory[position + 2]
 
     if sysMemoryCall == 1:
-        
-        printBuffer += chr(memory[position])
-        print(printBuffer)
+        printBuffer += chr(printInput)
         if printOut == 1:
             print(printBuffer)
+    
+    return printBuffer
 
 def build_jump_table(instructions):
     stack = []
@@ -41,7 +40,7 @@ def build_jump_table(instructions):
 
 def process_and_run(): # converts the binary to proper OP codes and then runs it
         
-    with open(args.input, 'br') as f:
+    with open(args.input, 'rb') as f:
         bf_binary = f.read()
 
     
@@ -56,7 +55,9 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
 
     instructionCounter = 0
 
-    instructionLength = len(instructions)
+    instructionLength = len(instructions)   
+
+    printBuffer = "" # setting up the print buffer for the print syscall.
 
     while instructionCounter < instructionLength: # the main instruction loop
 
@@ -143,7 +144,7 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
                 instructionCounter = jump[instructionCounter]
         
         elif op == 9: # golden brain syscall
-            sysCall(memory, position) 
+            printBuffer = sysCall(memory, position, printBuffer)
         
         else:
             pass
