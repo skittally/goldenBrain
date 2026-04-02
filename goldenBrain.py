@@ -15,6 +15,7 @@ def sysCall(memory, position, printBuffer):
         printBuffer += chr(printInput)
         if printOut == 1:
             print(printBuffer)
+            printBuffer = ""
     
     return printBuffer
 
