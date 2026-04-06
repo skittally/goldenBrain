@@ -1,5 +1,7 @@
 import os, sys
 
+# THIS IS NOT DONE, IDFK WHEN ITL BE DONE.
+
 def emit_print(char, is_last):
     return (
         "[-]"                      # syscall id cell
