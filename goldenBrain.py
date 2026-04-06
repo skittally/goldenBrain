@@ -19,7 +19,7 @@ def sysCall(memory, position, printBuffer):
             printBuffer = ""
 
     elif sysMemoryCall == 2: # prints the next right cells int value
-        print(memory[position + 1])
+        print(mem[position + 1])
 
     
     return printBuffer
@@ -86,12 +86,6 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
             if position >= len(memory):
                 memory.extend(b'\x00' * len(memory) if len(memory) else b'\x00')
 
-        elif op == 5:  # (.)
-            sys.stdout.write(chr(memory[position]))
-
-        elif op == 6:  # (,)
-            memory[position] = ord(sys.stdin.read(1) or '\0')
-
         elif op == 7:  # [
 
             loop_end = jump[instructionCounter]
@@ -149,6 +143,12 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
             if memory[position] != 0:
                 instructionCounter = jump[instructionCounter]
         
+        elif op == 5:  # (.)
+            sys.stdout.write(chr(memory[position]))
+
+        elif op == 6:  # (,)
+            memory[position] = ord(sys.stdin.read(1) or '\0')
+
         elif op == 9: # golden brain syscall
             printBuffer = sysCall(memory, position, printBuffer)
         
