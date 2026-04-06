@@ -8,9 +8,6 @@ parser.add_argument("--input", help="input raw brainfuck code")
 parser.add_argument("--output", help="output compiled file")
 args = parser.parse_args()
 
-# remove me!
-print(f"{args.input}")
-print(f"{args.output}")
 
 # init vars
 bf_code = ""
