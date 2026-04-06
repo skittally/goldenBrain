@@ -7,15 +7,20 @@ parser.add_argument("--debugging", help="used for program debugging. WARNING: th
 args = parser.parse_args()
 
 def sysCall(memory, position, printBuffer):
+
     sysMemoryCall = memory[position]
     printInput = memory[position + 1]
     printOut = memory[position + 2]
 
-    if sysMemoryCall == 1:
+    if sysMemoryCall == 1: # a syscall-based print implementation
         printBuffer += chr(printInput)
         if printOut == 1:
             print(printBuffer)
             printBuffer = ""
+
+    elif sysMemoryCall == 2: # prints the next right cells int value
+        print(memory[position + 1])
+
     
     return printBuffer
 
