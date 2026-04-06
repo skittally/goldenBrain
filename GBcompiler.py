@@ -82,7 +82,7 @@ def convert_and_write(bf_code):
 
             nibble_op = op_to_nibble(op)
             if nibble_op is None:
-                print("- WARN: the code is still dirty? (skipping)", op)
+                print("- WARN: the code is still dirty? (skipping): ", op)
                 continue
 
             nibble_cnt = take & 0xF
