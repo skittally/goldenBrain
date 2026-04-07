@@ -39,8 +39,7 @@ def transpile(program):
 # =========================
 
 program = '''
-print "HELLO WORLD"
-print "!!!"
+print "robot language :3"
 '''
 
 bf_output = transpile(program)

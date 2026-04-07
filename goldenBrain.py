@@ -1,4 +1,4 @@
-import os, sys, argparse, time
+import os, sys, argparse, time, random
 
 # Parser shit for commend arguments
 parser = argparse.ArgumentParser()
@@ -9,17 +9,24 @@ args = parser.parse_args()
 def sysCall(memory, position, printBuffer):
 
     sysMemoryCall = memory[position]
-    printInput = memory[position + 1]
-    printOut = memory[position + 2]
+    Arg1 = memory[position + 1]
+    Arg2 = memory[position + 2]
+    Arg3 = memory[position + 3]
 
     if sysMemoryCall == 1: # a syscall-based print implementation
-        printBuffer += chr(printInput)
-        if printOut == 1:
+        printBuffer += chr(Arg1)
+        if Arg2 == 1:
             print(printBuffer)
             printBuffer = ""
 
     elif sysMemoryCall == 2: # prints the next right cells int value
-        print(mem[position + 1])
+        print(Arg1)
+
+    elif sysMemoryCall == 3: # sleeps for the next right cells int value
+        time.sleep(Arg1)
+
+    elif sysMemoryCall == 4: # sets the cell in front of itself to a random value between 0 and 255
+        memory[position + 1] = random.randint(0, 255)
 
     
     return printBuffer
