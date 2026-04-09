@@ -28,6 +28,22 @@ def sysCall(memory, position, printBuffer):
     elif sysMemoryCall == 4: # sets the cell in front of itself to a random value between 0 and 255
         memory[position + 1] = random.randint(0, 255)
 
+    elif sysMemoryCall == 5:  # allows for long user input until the 255 terminator
+        bufferStart = position + 1
+        bufferEnd = bufferStart
+
+        # Find the terminator safely
+        while bufferEnd < len(memory) and memory[bufferEnd] != 255:
+            bufferEnd += 1
+
+        maxLen = bufferEnd - bufferStart
+
+        # Get user input and truncate if longer than maxLen
+        userInput = input()[:maxLen]
+
+        # Write input bytes to memory, pad remaining space with 0
+        for i in range(maxLen):
+            memory[bufferStart + i] = ord(userInput[i]) if i < len(userInput) else 0
     
     return printBuffer
 
@@ -61,7 +77,7 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
     callCounter = 0
     position = 0
 
-    memory = bytearray(512)
+    memory = bytearray(16)
 
     instructions = [((byte >> 4) & 0x0F, byte & 0x0F ) for byte in bf_binary]
     jump = build_jump_table([op for op, _ in instructions])
@@ -168,6 +184,7 @@ def process_and_run(): # converts the binary to proper OP codes and then runs it
             callCounter += 1
             if instructionCounter == len(instructions):
                 print(f"steps: {callCounter}")
+                print(memory)
         
 
 def main(): # do i must explain??
